@@ -50,7 +50,7 @@ export async function scrapeAmazonProduct(url: string) {
          originalPrice = currentPrice;
       }
 
-      const outOfStock =
+      const isOutOfStock =
          $("#availability span").text().trim().toLowerCase() ===
          "currently unavailable";
 
@@ -63,12 +63,25 @@ export async function scrapeAmazonProduct(url: string) {
 
       const currency = extractCurrency($(".a-price-symbol"));
 
-      console.log("title : ", title);
-      console.log("current price : ", currentPrice);
-      console.log("original price : ", originalPrice);
-      console.log("out of stock", outOfStock);
-      console.log("image", imageUrls);
-      console.log("currency", currency);
+      const discountRate = $(".savingsPercentage").text().replace(/[-%]/g, "");
+
+      //construct data object with scraped information
+      const data = {
+         url,
+         currency: currency || "$",
+         image: imageUrls[0],
+         currentPrice: Number(currentPrice),
+         originalPrice: Number(originalPrice),
+         priceHistory: [],
+         discountRate: Number(discountRate),
+         description: "description", //need to scrape
+         category: "category", //need to scrape
+         reviewsCount: 0, //need to scrape
+         stars: 0, //need to scrape
+         isOutOfStock,
+      };
+
+      console.log(data);
    } catch (error: any) {
       throw new Error(`Failed to scrape product: ${error.message}`);
    }
