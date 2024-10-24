@@ -1,4 +1,3 @@
-import { PriceHistoryItems } from "@/types";
 import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema(
@@ -9,7 +8,7 @@ const productSchema = new mongoose.Schema(
       image: { type: String, required: true },
       currentPrice: { type: Number, required: true },
       originalPrice: { type: Number, required: true },
-      PriceHistoryItems: [
+      priceHistory: [
          {
             price: { type: Number, required: true },
             date: { type: Date, default: Date.now },
