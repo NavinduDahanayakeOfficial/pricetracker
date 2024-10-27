@@ -27,22 +27,3 @@ export type Product = {
    users?: User[];
 };
 
-export type ScrapedProduct = {
-   url: string;
-   title: string;
-   currency: string;
-   image: string;
-   currentPrice: number;
-   originalPrice: number;
-   priceHistory: PriceHistoryItem[] | [];
-   highestPrice: number;
-   lowestPrice: number;
-   averagePrice: number;
-   discountRate: number;
-   description: string;
-   category: string;
-   reviewsCount: number;
-   stars: number;
-   isOutOfStock: boolean;
-   users?: User[];
-}
