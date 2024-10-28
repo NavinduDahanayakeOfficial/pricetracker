@@ -1,4 +1,4 @@
-import { PriceHistoryItems } from "@/types";
+import { PriceHistoryItem } from "@/types";
 
 const Notification = {
    WELCOME: "WELCOME",
@@ -63,7 +63,7 @@ export function extractDescription($: any) {
    return "";
 }
 
-export function getHighestPrice(priceList: PriceHistoryItems[]) {
+export function getHighestPrice(priceList: PriceHistoryItem[]) {
    let highestPrice = priceList[0];
 
    for (let i = 0; i < priceList.length; i++) {
@@ -75,7 +75,7 @@ export function getHighestPrice(priceList: PriceHistoryItems[]) {
    return highestPrice.price;
 }
 
-export function getLowestPrice(priceList: PriceHistoryItems[]) {
+export function getLowestPrice(priceList: PriceHistoryItem[]) {
    let lowestPrice = priceList[1];
 
    for (let i = 0; i < priceList.length; i++) {
@@ -87,7 +87,7 @@ export function getLowestPrice(priceList: PriceHistoryItems[]) {
    return lowestPrice.price;
 }
 
-export function getAveragePrice(priceList: PriceHistoryItems[]) {
+export function getAveragePrice(priceList: PriceHistoryItem[]) {
    const sumOfPrices = priceList.reduce((acc, curr) => acc + curr.price, 0);
 
    return sumOfPrices / priceList.length || 0;
