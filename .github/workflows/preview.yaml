@@ -5,7 +5,7 @@ env: VERCEL_ORG_ID:${{secrets.VERCEL_ORG_ID}}
 on:
    push:
       branches:
-         - Dev
+         - dev
 
 jobs:
    Deploy-Production:
