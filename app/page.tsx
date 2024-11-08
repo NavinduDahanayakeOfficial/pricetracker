@@ -1,9 +1,13 @@
 import HeroCarousel from "@/components/HeroCarousel";
+import ProductCard from "@/components/ProductCard";
 import Searchbar from "@/components/Searchbar";
+import { getAllProducts } from "@/lib/actions";
 import Image from "next/image";
 import React from "react";
 
-const Home = () => {
+const Home = async () => {
+   const allProducts = await getAllProducts();
+
    return (
       <>
          <section className="px-6 md:px-20 py-24">
@@ -23,20 +27,21 @@ const Home = () => {
                      <span className="text-primary"> PriceTracker</span>
                   </h1>
                   <p className="mt-6 ">
-                     Powerful, self-serve product and growth analytics to help you convert, engage, and retain more.
+                     Powerful, self-serve product and growth analytics to help
+                     you convert, engage, and retain more.
                   </p>
 
-                  <Searchbar/>
+                  <Searchbar />
                </div>
 
-               <HeroCarousel/>
+               <HeroCarousel />
             </div>
          </section>
          <section className="trending-section">
             <h2 className="section-text">Trending</h2>
             <div className="flex flex-wrap gap-x- gap-y-16">
-               {['Apple Iphone 15', 'Books', 'Sneakers'].map((product)=>(
-                  <div>{product}</div>
+               {allProducts?.map((product) => (
+                  <ProductCard key={product._id} product={product}/>
                ))}
             </div>
          </section>
