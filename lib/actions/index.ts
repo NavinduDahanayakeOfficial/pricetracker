@@ -22,6 +22,15 @@ export async function scrapeAndStoreProduct(productUrl: string) {
       });
 
       if (existingProduct) {
+
+         if (
+            existingProduct.priceHistory[
+               existingProduct.priceHistory.length - 1
+            ].price === scrapedProduct.currentPrice
+         ) {
+            return;
+         }
+
          const updatedPriceHistory: any = [
             ...existingProduct.priceHistory,
             { price: scrapedProduct.currentPrice },
@@ -44,8 +53,7 @@ export async function scrapeAndStoreProduct(productUrl: string) {
          { upsert: true, new: true }
       );
 
-      revalidatePath(`/products/${newProduct._id}`)
-
+      revalidatePath(`/products/${newProduct._id}`);
    } catch (error: any) {
       throw new Error(`Failed to create/update product ${error.message}`);
    }
