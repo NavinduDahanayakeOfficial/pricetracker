@@ -42,7 +42,14 @@ const Searchbar = () => {
          //scrape the product page
          const product = await scrapeAndStoreProduct(searchPrompt);
       } catch (error) {
-         console.log(error)
+         if (error instanceof Error) {
+            toast.error(
+               error.message.replace("Failed to create/update product:", "")
+            );
+         } else {
+            toast.error("An unknown error occurred");
+         }
+         console.log(error);
       } finally {
          setIsLoading(false);
       }

@@ -27,6 +27,17 @@ export async function scrapeAmazonProduct(url: string) {
       const $ = cheerio.load(response.data);
 
       //extract the product title
+
+      const notAvailableForCountry =
+         $("#availability_feature_div #availability span span")
+            .text()
+            .trim() ===
+         "This item cannot be shipped to your selected delivery location. Please choose a different delivery location.";
+
+      if (notAvailableForCountry) {
+         throw new Error("Product is not available for your country");
+      }
+
       const title = $("#productTitle").text().trim();
       let currentPrice = extractPrice(
          $(".apexPriceToPay"),
@@ -84,8 +95,7 @@ export async function scrapeAmazonProduct(url: string) {
          highestPrice: Number(originalPrice) || Number(currentPrice),
          averagePrice: Number(currentPrice) || Number(originalPrice),
       };
-
-      //console.log(data);
+      console.log(data);
 
       return data;
    } catch (error: any) {
