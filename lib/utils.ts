@@ -38,11 +38,7 @@ export function extractCurrency(element: any) {
 }
 
 export function extractDescription($: any) {
-   const selectors = [
-      ".a-ordered-list .a-list-items",
-      "#productDescription_feature_div #productDescription p span",
-      ".a-expander-content p",
-   ];
+   const selectors = ["#featurebullets_feature_div #feature-bullets ul"];
 
    for (const selector of selectors) {
       //console.log("selector ", selector);
@@ -92,3 +88,10 @@ export function getAveragePrice(priceList: PriceHistoryItem[]) {
 
    return sumOfPrices / priceList.length || 0;
 }
+
+export const formatNumber = (num: number = 0) => {
+   return num.toLocaleString(undefined, {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+   });
+};
