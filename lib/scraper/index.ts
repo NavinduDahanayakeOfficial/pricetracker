@@ -77,9 +77,13 @@ export async function scrapeAmazonProduct(url: string) {
       const reviewCount = $("#acrCustomerReviewText")
          .text()
          .trim()
-         .split(" ")[0];
+         .split(" ")[0]
+         .replace(/,/g, "");
 
-      const noOfStars = $(".a-size-base .a-color-base").text().trim().split(" ")[0];
+      const noOfStars = $(".a-size-base .a-color-base")
+         .text()
+         .trim()
+         .split(" ")[0];
 
       //construct data object with scraped information
       const data = {
@@ -95,8 +99,8 @@ export async function scrapeAmazonProduct(url: string) {
          discountRate: Number(discountRate),
          description, // not working as intended
          category: "category", //need to scrape
-         reviewsCount: reviewCount, //need to scrape
-         stars: noOfStars,
+         reviewsCount: Number(reviewCount), //need to scrape
+         stars: Number(noOfStars),
          isOutOfStock,
          lowestPrice: Number(currentPrice) || Number(originalPrice),
          highestPrice: Number(originalPrice) || Number(currentPrice),
