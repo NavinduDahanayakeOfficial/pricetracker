@@ -41,17 +41,13 @@ export function extractDescription($: any) {
    const selectors = ["#featurebullets_feature_div #feature-bullets ul"];
 
    for (const selector of selectors) {
-      //console.log("selector ", selector);
       const elements = $(selector);
-      //console.log("elem?", elements.length > 0);
 
       if (elements.length > 0) {
          const textContent = elements
             .map((_: any, element: any) => $(element).text().trim())
             .get()
             .join("\n");
-
-         //console.log("textcontent : ", textContent);
 
          return textContent;
       }
