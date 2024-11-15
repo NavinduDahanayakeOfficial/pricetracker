@@ -7,7 +7,9 @@ import { scrapeAmazonProduct } from "../scraper";
 import { getAveragePrice, getHighestPrice, getLowestPrice } from "../utils";
 
 export async function scrapeAndStoreProduct(productUrl: string) {
-   if (!productUrl) return;
+   let isExistingProduct = false;
+
+   if (!productUrl) return { isSuccess: false, isExistingProduct };
 
    try {
       connectToDB();
@@ -22,12 +24,13 @@ export async function scrapeAndStoreProduct(productUrl: string) {
       });
 
       if (existingProduct) {
+         isExistingProduct = true;
          if (
             existingProduct.priceHistory[
                existingProduct.priceHistory.length - 1
             ].price === scrapedProduct.currentPrice
          ) {
-            return;
+            return { isSuccess: false, isExistingProduct };
          }
 
          const updatedPriceHistory: any = [
@@ -53,11 +56,13 @@ export async function scrapeAndStoreProduct(productUrl: string) {
       );
 
       revalidatePath(`/products/${newProduct._id}`);
-      
+      return { isSuccess: true, isExistingProduct };
    } catch (error: any) {
       throw new Error(`Failed to create/update product: ${error.message}`);
    }
 }
+
+
 
 export async function getProductById(productId: string) {
    try {

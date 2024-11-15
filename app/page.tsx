@@ -24,7 +24,7 @@ const Home = async () => {
                   </p>
                   <h1 className="head-text">
                      Unleash the Power of
-                     <span className="text-primary"> PriceTracker</span>
+                     <span className="text-primary"> PriceTrack</span>
                   </h1>
                   <p className="mt-6 ">
                      Powerful, self-serve product and growth analytics to help
@@ -39,9 +39,9 @@ const Home = async () => {
          </section>
          <section className="trending-section">
             <h2 className="section-text">Trending</h2>
-            <div className="flex flex-wrap gap-x- gap-y-16">
+            <div className="flex flex-wrap gap-x-9 gap-y-16">
                {allProducts?.map((product) => (
-                  <ProductCard key={product._id} product={product}/>
+                  <ProductCard key={product._id} product={product} />
                ))}
             </div>
          </section>

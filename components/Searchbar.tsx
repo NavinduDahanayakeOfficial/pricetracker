@@ -10,8 +10,7 @@ const Searchbar = () => {
 
    const isValidAmazonProductUrl = (url: string) => {
       try {
-         const parsedUrl = new URL(url);
-         const hostname = parsedUrl.hostname;
+         const { hostname } = new URL(url);
 
          if (
             hostname.includes("amazon.com") ||
@@ -27,6 +26,24 @@ const Searchbar = () => {
       return false;
    };
 
+   const handleToastMessage = (product: any) => {
+      const { isSuccess, isExistingProduct } = product;
+
+      if (isSuccess) {
+         toast.success(
+            isExistingProduct
+               ? "Product price has changed"
+               : "Product added successfully"
+         );
+      } else {
+         toast.error(
+            isExistingProduct
+               ? "Product price has not changed"
+               : "Failed to scrape the product"
+         );
+      }
+   };
+
    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault();
 
@@ -36,16 +53,14 @@ const Searchbar = () => {
          return toast.error("Please provide a valid Amazon link");
       }
 
+      setIsLoading(true);
       try {
-         setIsLoading(true);
-
          //scrape the product page
          const product = await scrapeAndStoreProduct(searchPrompt);
+         handleToastMessage(product);
       } catch (error) {
          if (error instanceof Error) {
-            toast.error(
-               error.message.replace("Failed to create/update product:", "")
-            );
+            toast.error(error.message || "An unknown error occurred");
          } else {
             toast.error("An unknown error occurred");
          }
