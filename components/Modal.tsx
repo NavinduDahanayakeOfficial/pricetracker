@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useState } from "react";
+import { FormEvent, Fragment, useState } from "react";
 import {
    Button,
    Description,
@@ -24,7 +24,16 @@ const Modal = () => {
       setIsOpen(false);
    };
 
-   const handleSubmit = () => {};
+   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      setIsSubmitting(true);
+
+      //addUserEmailToProduct(productId, email);
+
+      setIsSubmitting(false);
+      setEmail("");
+      closeModal();
+   };
 
    return (
       <>
@@ -111,4 +120,3 @@ const Modal = () => {
 };
 
 export default Modal;
-
